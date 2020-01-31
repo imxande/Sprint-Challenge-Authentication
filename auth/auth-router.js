@@ -7,6 +7,9 @@ const bcrypt = require('bcryptjs');
 // i need jwt to handle token creation
 const jwt = require('jsonwebtoken');
 
+// destructuring and importing jwtSecret from secrets
+const { jwtSecret } = require('../config/secrets.js');
+
 // importing user model here
 const Users = require('../users/users-model.js')
 
@@ -64,17 +67,21 @@ router.post("/login", (req, res) => {
       });
 });
 
-// function 
+// function signtoken implementation
 function signToken(user) {
-  
-  const payload = user;
 
-  const jwtSecret = process.env.JWT_SECRET || "is it secret, is it safe?";
-
-  const options = {
-    expiresIn: '1d'
+  const payload = {
+    subject: user.id, // sub in payload is what the token is about
+    username: user.username,
+    // ...otherData
   };
 
+  // show other available options in the library's documentation
+  const options = {
+    expiresIn: '1d' 
+  };
+
+  // extract the secret to used where needed
   return jwt.sign(payload, jwtSecret, options);
 }
 
