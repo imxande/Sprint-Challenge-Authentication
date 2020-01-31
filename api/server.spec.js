@@ -28,3 +28,9 @@ describe('POST /register', () => {
     })
 
 })
+
+describe('server', function() {
+    it('runs the tests', function() {
+        expect(true).toBe(true);
+    })
+})
