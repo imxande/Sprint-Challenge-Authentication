@@ -34,3 +34,21 @@ describe('server', function() {
         expect(true).toBe(true);
     })
 })
+
+describe('GET /jokes', () => {
+    beforeEach(async() => {
+        await db('users')
+            .truncate();
+    })
+
+    it('should return status 201 on login', async () => {    
+        // new user register
+        const user = await request(server).post('/api/auth/register')
+        .send({ username: 'Artanis', password: 'my_life_for_aiur' })
+        
+        // same user login
+        const userLogin = await request(server).post('/api/auth/login')
+            .send({ username: 'Artanis', password: 'my_life_for_aiur' })
+            expect(userLogin.status).toBe(200)
+    })
+})
